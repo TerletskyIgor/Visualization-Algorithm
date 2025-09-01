@@ -10,16 +10,26 @@ import SwiftUI
 struct ContentView: View {
     @StateObject private var viewModel = SortingViewModel()
     
+    @ViewBuilder
     var navigationButton: some View {
         VStack {
-            Button("Start") { viewModel.startSorting() }
-            HStack {
-                Button("◀︎ Back") { viewModel.stepBackward() }
-                Spacer()
-                Button("Forward ▶︎") { viewModel.stepForward() }
+            Button(viewModel.hasStartedSorting ? "Refresh" : "Start") {
+                viewModel.startSorting()
             }
-            .padding()
-
+            .padding(.bottom, 10)
+            
+            if viewModel.hasStartedSorting {
+                HStack {
+                    Button("◀︎ Back") {
+                        viewModel.stepBackward()
+                    }
+                    Spacer()
+                    Button("Forward ▶︎") {
+                        viewModel.stepForward()
+                    }
+                }
+                .padding()
+            }
         }
     }
     
@@ -30,6 +40,9 @@ struct ContentView: View {
             }
         }
         .pickerStyle(SegmentedPickerStyle())
+        .onChange(of: viewModel.selectedAlgorithm, { _ , _ in
+            viewModel.resetSorting()
+        })
         .padding()
     }
     

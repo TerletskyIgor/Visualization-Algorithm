@@ -9,7 +9,7 @@ import SwiftUI
 
 @MainActor
 class SortingViewModel: ObservableObject {
-    @Published var inputText: String = "5,3,8,4,2"
+    @Published var inputText: String = ""
     @Published var errorMessage: String? = nil
     @Published var steps: [SortingStep] = []
     @Published var currentStepIndex: Int = 0
@@ -29,6 +29,10 @@ class SortingViewModel: ObservableObject {
                 return InsertionSort()
             }
         }
+    }
+    
+    var hasStartedSorting: Bool {
+        !steps.isEmpty
     }
     
     var currentArrayText: String {
@@ -55,6 +59,11 @@ class SortingViewModel: ObservableObject {
     func stepBackward() {
         guard currentStepIndex > 0 else { return }
         currentStepIndex -= 1
+    }
+    
+    func resetSorting() {
+        steps = []
+        currentStepIndex = 0
     }
     
     func validateInput() -> [Int]? {
