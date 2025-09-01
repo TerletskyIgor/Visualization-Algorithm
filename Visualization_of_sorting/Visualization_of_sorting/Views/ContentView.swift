@@ -56,11 +56,6 @@ struct ContentView: View {
                     .font(.subheadline)
                     .foregroundColor(.red)
             }
-            
-            Text(viewModel.currentArrayText)
-                   .font(.system(.body, design: .monospaced))
-                   .foregroundColor(.primary)
-                   .padding(.top, 4)
         }
     }
     

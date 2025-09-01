@@ -35,11 +35,6 @@ class SortingViewModel: ObservableObject {
         !steps.isEmpty
     }
     
-    var currentArrayText: String {
-        guard let step = currentStep else { return "" }
-        return step.array.map { String($0) }.joined(separator: " ")
-    }
-    
     var currentStep: SortingStep? {
         guard !steps.isEmpty, currentStepIndex < steps.count else { return nil }
         return steps[currentStepIndex]
