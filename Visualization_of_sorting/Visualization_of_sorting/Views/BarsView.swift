@@ -12,7 +12,7 @@ struct BarsView: View {
     
     var body: some View {
         GeometryReader { geo in
-            let maxVal = (step.array.max() ?? 1)
+            let maxVal = step.array.max() ?? 1
             let barWidth = geo.size.width / CGFloat(step.array.count)
             
             HStack(spacing: 2) {
@@ -20,13 +20,20 @@ struct BarsView: View {
                     let value = step.array[index]
                     let heightRatio = CGFloat(value) / CGFloat(maxVal)
                     
-                    Rectangle()
-                        .fill(step.highlightedIndices.contains(index) ? Color.red : Color.blue)
-                        .frame(
-                            width: barWidth,
-                            height: geo.size.height * heightRatio
-                        )
-                        .animation(.easeInOut, value: step.array)
+                    ZStack(alignment: .bottom) {
+                        Rectangle()
+                            .fill(step.highlightedIndices.contains(index) ? Color.red : Color.blue)
+                            .frame(
+                                width: barWidth,
+                                height: geo.size.height * heightRatio
+                            )
+                            .animation(.easeInOut, value: step.array)
+                        
+                        Text("\(value)")
+                            .font(.body) 
+                            .foregroundColor(.white)
+                            .padding(.bottom, 2)
+                    }
                 }
             }
         }
