@@ -65,18 +65,10 @@ struct ContentView: View {
     }
     
     @ViewBuilder
-    var currentSortingStep: some View {
+    var barsView: some View {
         if let step = viewModel.currentStep {
-            HStack(alignment: .bottom, spacing: 8) {
-                ForEach(step.array.indices, id: \.self) { index in
-                    Rectangle()
-                        .fill(step.highlightedIndices.contains(index) ? Color.red : Color.blue)
-                        .frame(width: 20, height: CGFloat(step.array[index]) * 10)
-                        .animation(.easeInOut, value: step.array)
-                }
-            }
-            .frame(height: 300)
-            .padding()
+            BarsView(step: step).frame(height: 300)
+                .padding()
         }
     }
     
@@ -87,7 +79,7 @@ struct ContentView: View {
             algorithmPicker
             navigationButton
             Spacer()
-            currentSortingStep
+            barsView
             Spacer()
         }
     }
